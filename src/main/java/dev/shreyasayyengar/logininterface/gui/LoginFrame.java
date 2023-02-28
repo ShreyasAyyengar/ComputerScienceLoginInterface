@@ -34,7 +34,7 @@ public class LoginFrame extends JFrame {
 
             if (Util.containsUserPassMatch(username, password)) {
                 dispose();
-                new MusicPlayerFrame();
+                new ReservationFrame(Util.getFromUsername(username));
             } else {
                 successPredicateLabel.setText("Login failed! One or more of your credentials are incorrect.");
                 Executors.newSingleThreadScheduledExecutor().schedule(() -> successPredicateLabel.setText(""), 5, java.util.concurrent.TimeUnit.SECONDS);

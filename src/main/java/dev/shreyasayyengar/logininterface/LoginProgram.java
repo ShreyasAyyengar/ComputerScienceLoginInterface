@@ -5,9 +5,7 @@ import dev.shreyasayyengar.logininterface.gui.WelcomeFrame;
 import dev.shreyasayyengar.logininterface.objects.LoginUser;
 import dev.shreyasayyengar.logininterface.util.AuthInfo;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -34,12 +32,13 @@ public class LoginProgram {
         this.database = new MySQL(AuthInfo.MYSQL_USERNAME.get(), AuthInfo.MYSQL_PASSWORD.get(), AuthInfo.MYSQL_DATABASE.get(), AuthInfo.MYSQL_HOST.get(), Integer.parseInt(AuthInfo.MYSQL_PORT.get()));
 
         this.database.preparedStatementBuilder("create table if not exists login_users(" +
-                "    uuid     varchar(36) not null," +
-                "    username tinytext    null," +
-                "    password tinytext    null," +
-                "    email    tinytext    null," +
-                "    address  tinytext    null," +
-                "    gender   tinytext    null" +
+                "    uuid           varchar(36) not null," +
+                "    username       tinytext    null," +
+                "    password       tinytext    null," +
+                "    email          tinytext    null," +
+                "    address        tinytext    null," +
+                "    gender         tinytext    null," +
+                "    reservations   longtext    null" +
                 ");").executeUpdate();
 
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> this.database.preparedStatementBuilder("select 1").executeQuery(resultSet -> {
@@ -56,8 +55,9 @@ public class LoginProgram {
                     String email = resultSet.getString("email");
                     String address = resultSet.getString("address");
                     String gender = resultSet.getString("gender");
+                    Collection<String> reservations = resultSet.getString("reservations") == null ? Collections.emptySet() : Arrays.stream(resultSet.getString("reservations").split("\\|")).toList();
 
-                    loginUsers.add(new LoginUser(uuid, username, password, email, address, gender));
+                    loginUsers.add(new LoginUser(uuid, username, password, email, address, gender, new ArrayList<>(reservations)));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

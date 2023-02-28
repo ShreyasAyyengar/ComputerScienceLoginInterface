@@ -1,6 +1,7 @@
 package dev.shreyasayyengar.logininterface.util;
 
 import dev.shreyasayyengar.logininterface.LoginProgram;
+import dev.shreyasayyengar.logininterface.objects.LoginUser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,5 +16,9 @@ public class Util {
 
     public static boolean containsUserPassMatch(String username, String password) {
         return LoginProgram.getInstance().getLoginUsers().stream().anyMatch(loginUser -> loginUser.username().equals(username) && loginUser.password().equals(password));
+    }
+
+    public static LoginUser getFromUsername(String username) {
+        return LoginProgram.getInstance().getLoginUsers().stream().filter(loginUser -> loginUser.username().equals(username)).findFirst().orElse(null);
     }
 }

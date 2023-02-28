@@ -36,7 +36,6 @@ public class ForgotFrame extends JFrame {
             }
 
             Optional<LoginUser> optionalUser = LoginProgram.getInstance().getLoginUsers().stream().filter(loginUser -> loginUser.email().equalsIgnoreCase(typedEmail)).findFirst();
-
             optionalUser.ifPresentOrElse(email -> {
                 new GmailServiceSender(optionalUser.get());
 

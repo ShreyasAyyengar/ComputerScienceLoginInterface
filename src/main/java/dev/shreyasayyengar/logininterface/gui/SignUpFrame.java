@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class SignUpFrame extends JFrame {
@@ -170,7 +171,7 @@ public class SignUpFrame extends JFrame {
 
         signUpButton.addActionListener(event -> {
             if (isUsernameAcceptable && isPasswordAcceptable && isConfirmPasswordAcceptable && isAddressAcceptable && isEmailAcceptable && isGenderAcceptable) {
-                instance.getLoginUsers().add(new LoginUser(UUID.randomUUID(), usernameField.getText(), String.valueOf(passwordField.getPassword()), addressField.getText(), emailField.getText(), genderField.getText()));
+                instance.getLoginUsers().add(new LoginUser(UUID.randomUUID(), usernameField.getText(), String.valueOf(passwordField.getPassword()), emailField.getText(), addressField.getText(), genderField.getText(), new HashSet<>()));
                 JOptionPane.showMessageDialog(null, "Successfully registered!");
                 dispose();
                 new LoginFrame();
