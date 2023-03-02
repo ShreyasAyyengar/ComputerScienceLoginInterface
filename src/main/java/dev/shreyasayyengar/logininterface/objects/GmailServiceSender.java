@@ -45,9 +45,7 @@ public class GmailServiceSender {
     }
 
     private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        System.out.println(LoginProgram.class.getResourceAsStream("/client_secret.json"));
         // Load client secrets.
-        System.out.println(new InputStreamReader(LoginProgram.class.getResourceAsStream("/client_secret.json")));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(FACTORY, new InputStreamReader(LoginProgram.class.getResourceAsStream("/client_secret.json")));
 
         // Build flow and trigger user authorization request.
